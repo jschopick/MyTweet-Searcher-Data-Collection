@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-10">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/benbl/Desktop/eclipse/libraries/gson-2.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/benbl/Desktop/eclipse/libraries/jsoup-1.11.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/benbl/Desktop/eclipse/libraries/twitter4j-async-4.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/benbl/Desktop/eclipse/libraries/twitter4j-core-4.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/benbl/Desktop/eclipse/libraries/twitter4j-examples-4.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/benbl/Desktop/eclipse/libraries/twitter4j-media-support-4.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/benbl/Desktop/eclipse/libraries/twitter4j-stream-4.0.4.jar"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
