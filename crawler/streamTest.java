@@ -17,6 +17,7 @@ import twitter4j.TwitterStreamFactory;
 import twitter4j.URLEntity;
 import twitter4j.conf.ConfigurationBuilder;
 import twitter4j.TwitterObjectFactory;
+import twitter4j.FilterQuery;
 // Other Libraries
 import java.io.*;
 import java.nio.file.Files;
@@ -40,10 +41,10 @@ private static Integer fileCount = 1;
 		
 		StatusListener listener = new StatusListener(){
 			
-			public void onStatus(Status s) {	
-//				if(s.getGeoLocation() != null) {	
+			public void onStatus(Status s) {
 					String ss = TwitterObjectFactory.getRawJSON(s);
 					JsonObject jsonObject = gson.fromJson(ss, JsonObject.class); // parse
+					
 					for(URLEntity url : s.getURLEntities()){
 						String addr = url.getURL();
 						Document temp = null;
@@ -59,6 +60,7 @@ private static Integer fileCount = 1;
 					}
 					
 					// Append json info to json file
+					// Set up json file
 					String fs = System.getProperty("file.separator");
 					String filename = "." + fs + "StoredTweets" + fs + "Document" + fileCount + ".json";
 					File f = new File(filename);
@@ -86,31 +88,17 @@ private static Integer fileCount = 1;
 							if(!fileAlreadyExists(filename2)) {
 								append.print("]");
 								System.out.println("Ending file: " + filename);
-							} 
-							else {
-								// Adds to next file.
-								File f2 = new File(filename2);
-								if(f2.length() < 10485760) { // Checks if next file is already full
-									try(FileWriter appendToFile2 = new FileWriter(filename2, true);
-											BufferedWriter bw2 = new BufferedWriter(appendToFile2);
-											PrintWriter app = new PrintWriter(bw2)) {
-											app.println("," + jsonObject);
-											app.close();
-									} catch (IOException e) {
-										// Do Nothing
-									}	
-								}
 							}
 							fileCount++; // Move to next file name
 						} else { // Adds to current file
 							append.println("," + jsonObject);
-//							System.out.print(" -> Document" + fileCount);
+							// Check which document it's going to
+							// System.out.print(" -> Document" + fileCount);
 						}
 						append.close();
 					} catch(IOException e) {
 						// Do nothing
 					}
-//				}
 			}
 			
 			//To implement when needed
@@ -125,11 +113,14 @@ private static Integer fileCount = 1;
 	    //Calls TwitterStream
 	    TwitterStream twitterStream = new TwitterStreamFactory(cb.build()).getInstance();
 		twitterStream.addListener(listener);
-		// sample() method internally creates a thread which manipulates TwitterStream
-		// and calls these adequate listener methods continuously.
-	
-		twitterStream.sample();
-
+		
+		// Creates a filter to grab ONLY GeoTagged Tweets. Runs much faster than
+		// than using sample() and putting a constraint after.
+		FilterQuery geoTagged = new FilterQuery();
+		double[][] locationConstraint = {{-180.0d, -90.0d}, {180.0d, 90.0d}};
+		geoTagged.locations(locationConstraint);
+		twitterStream.filter(geoTagged);
+		
 	}
 	
 	private static boolean fileAlreadyExists(String fileName) {
