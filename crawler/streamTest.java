@@ -41,7 +41,7 @@ private static Integer fileCount = 1;
 		StatusListener listener = new StatusListener(){
 			
 			public void onStatus(Status s) {	
-				if(s.getGeoLocation() != null) {	
+//				if(s.getGeoLocation() != null) {	
 					String ss = TwitterObjectFactory.getRawJSON(s);
 					JsonObject jsonObject = gson.fromJson(ss, JsonObject.class); // parse
 					for(URLEntity url : s.getURLEntities()){
@@ -54,7 +54,7 @@ private static Integer fileCount = 1;
 							e.printStackTrace();
 						}
 						String title = temp.title();
-						System.out.print("URL: " + url.getURL() + ", title: " + title);
+						System.out.println("URL: " + url.getURL() + ", title: " + title);
 						jsonObject.addProperty("linkTitle", title); // modify
 					}
 					
@@ -86,26 +86,31 @@ private static Integer fileCount = 1;
 							if(!fileAlreadyExists(filename2)) {
 								append.print("]");
 								System.out.println("Ending file: " + filename);
-							} else { 
-								// Adds to next file
-								try(FileWriter appendToFile2 = new FileWriter(filename2, true);
-										BufferedWriter bw2 = new BufferedWriter(appendToFile2);
-										PrintWriter app = new PrintWriter(bw2)) {
-										app.println("," + jsonObject);
-										app.close();
-								} catch (IOException e) {
-									// Do Nothing
-								}							}
+							} 
+							else {
+								// Adds to next file.
+								File f2 = new File(filename2);
+								if(f2.length() < 10485760) { // Checks if next file is already full
+									try(FileWriter appendToFile2 = new FileWriter(filename2, true);
+											BufferedWriter bw2 = new BufferedWriter(appendToFile2);
+											PrintWriter app = new PrintWriter(bw2)) {
+											app.println("," + jsonObject);
+											app.close();
+									} catch (IOException e) {
+										// Do Nothing
+									}	
+								}
+							}
 							fileCount++; // Move to next file name
 						} else { // Adds to current file
 							append.println("," + jsonObject);
+//							System.out.print(" -> Document" + fileCount);
 						}
-						System.out.println(" -> Document" + fileCount);
 						append.close();
 					} catch(IOException e) {
 						// Do nothing
 					}
-				}
+//				}
 			}
 			
 			//To implement when needed
