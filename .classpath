@@ -13,5 +13,8 @@
 	<classpathentry kind="lib" path="C:/Users/benbl/Desktop/eclipse/libraries/twitter4j-examples-4.0.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/benbl/Desktop/eclipse/libraries/twitter4j-media-support-4.0.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/benbl/Desktop/eclipse/libraries/twitter4j-stream-4.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/benbl/eclipse-workspace/cs172part1_twitter/luceneJars/lucene-core-7.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/benbl/eclipse-workspace/cs172part1_twitter/luceneJars/lucene-queryparser-6.6.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/benbl/eclipse-workspace/cs172part1_twitter/luceneJars/json-simple-1.1.1.jar/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
